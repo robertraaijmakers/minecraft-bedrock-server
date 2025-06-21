@@ -1,37 +1,27 @@
-[![Buy me a coffee](https://github.com/hexlo/terraria-server-docker/raw/gh-pages/assets/yellow-button-256w.png)](https://www.buymeacoffee.com/hexlo)  
-
-```                
- __  __     ______     __  __     __         ______    
-/\ \_\ \   /\  ___\   /\_\_\_\   /\ \       /\  __ \   
-\ \  __ \  \ \  __\   \/_/\_\/_  \ \ \____  \ \ \/\ \  
- \ \_\ \_\  \ \_____\   /\_\/\_\  \ \_____\  \ \_____\ 
-  \/_/\/_/   \/_____/   \/_/\/_/   \/_____/   \/_____/ 
-                                                       
-                   
-```
 # Minecraft Bedrock Server
-Docker Hub mirror: [https://hub.docker.com/r/hexlo/minecraft-bedrock-server](https://hub.docker.com/r/hexlo/minecraft-bedrock-server)
 
 ## Initial Setup
-
 You can easily import your world and config files. Here is an example docker-compose.yml:
 Change the path of the volumes approprietly.
 ```
-version: '3'
+version: latest
 services:
-
   minecraft-server:
-    # Docker Hub mirror: hexlo/minecraft-bedrock-server:latest
-    image: ghcr.io/iceoid/minecraft-bedrock-server:latest
-    container_name: minecraft-server
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
-    restart: unless-stopped
+    image: my-minecraft-bedrock:latest
+    container_name: Minecraft-Bedrock
+    hostname: minecraft-server
+    mem_limit: 2g
+    cpu_shares: 768
+    security_opt:
+      - no-new-privileges:true
     ports:
-      - 19132:19132/udp
+      - 20132:19132/udp
     volumes:
-      - ./path_to/config:/bedrock-server/config
-      - ./path_to/worlds:/bedrock-server/worlds
+      - /folder_path_to/config:/bedrock-server/config:rw
+      - /folder_path_to/worlds:/bedrock-server/worlds:rw
+      - /folder_path_to/info:/bedrock-server/info:rw
+      - /folder_path_to/worlds_backup:/bedrock-server/worlds_backup:rw
+    restart: on-failure:5
 ```
 
 If you want multiple servers running concurrently, you can have different ports for each one, and port forward accordingly. ie.:
