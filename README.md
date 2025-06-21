@@ -7,7 +7,7 @@ Change the path of the volumes approprietly.
 version: latest
 services:
   minecraft-server:
-    image: my-minecraft-bedrock:latest
+    image: ghcr.io/robertraaijmakers/minecraft-bedrock-server:latest
     container_name: Minecraft-Bedrock
     hostname: minecraft-server
     mem_limit: 2g
